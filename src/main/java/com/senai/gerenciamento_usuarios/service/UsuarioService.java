@@ -1,8 +1,11 @@
 package com.senai.gerenciamento_usuarios.service;
 
+import com.senai.gerenciamento_usuarios.dto.LoginDto;
 import com.senai.gerenciamento_usuarios.dto.RespostaUsuarioDto;
 import com.senai.gerenciamento_usuarios.dto.UsuarioDto;
 import com.senai.gerenciamento_usuarios.entity.UsuarioEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -92,4 +95,17 @@ public class UsuarioService {
 
         return "Erro: usuário com CPF '" + cpf + "' não encontrado.";
     }
+
+    //Validação de Login
+    public boolean validarCredenciais(LoginDto loginDto) {
+
+        for (UsuarioEntity usuarioLogin : usuarios) {
+            if (usuarioLogin.getLogin().equals(loginDto.getLogin()) && usuarioLogin.getSenha().equals(loginDto.getSenha())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
