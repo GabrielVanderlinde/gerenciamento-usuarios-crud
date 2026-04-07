@@ -1,8 +1,10 @@
 package com.senai.gerenciamento_usuarios.controller;
 
 import com.senai.gerenciamento_usuarios.dto.RespostaUsuarioDto;
+import com.senai.gerenciamento_usuarios.dto.TrocaSenhaDto;
 import com.senai.gerenciamento_usuarios.dto.UsuarioDto;
 import com.senai.gerenciamento_usuarios.service.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +74,32 @@ public class UsuarioController {
         }
 
         return ResponseEntity.ok().body(resposta);
+    }
+
+    @PutMapping("/usuario/senha/{login}")
+    public ResponseEntity<String> trocarSenha(@PathVariable String login, @RequestBody TrocaSenhaDto dto) {
+
+        if (dto.getSenhaAtual() == null || dto.getSenhaNova() == null ||
+                dto.getSenhaAtual().isBlank() || dto.getSenhaNova().isBlank()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Senha atual e nova senha são obrigatórias.");
+        }
+
+        String resposta = service.trocarSenha(login, dto);
+
+        if (resposta.contains("senha atual incorreta")) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(resposta);
+        } else if (resposta.startsWith("Erro")) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(resposta);
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(resposta);
     }
 }

@@ -2,6 +2,7 @@ package com.senai.gerenciamento_usuarios.service;
 
 import com.senai.gerenciamento_usuarios.dto.LoginDto;
 import com.senai.gerenciamento_usuarios.dto.RespostaUsuarioDto;
+import com.senai.gerenciamento_usuarios.dto.TrocaSenhaDto;
 import com.senai.gerenciamento_usuarios.dto.UsuarioDto;
 import com.senai.gerenciamento_usuarios.entity.UsuarioEntity;
 import org.springframework.http.HttpStatus;
@@ -75,7 +76,7 @@ public class UsuarioService {
             if (u.getCpf().equals(cpf)) {
                 u.setNomeCompleto(usuarioDto.getNomeCompleto());
                 u.setLogin(usuarioDto.getLogin());
-                u.setSenha(usuarioDto.getSenha());
+                // u.setSenha(usuarioDto.getSenha());
                 return "Usuário atualizado com sucesso!";
             }
         }
@@ -106,6 +107,30 @@ public class UsuarioService {
         }
 
         return false;
+    }
+
+    //Troca de Senha
+    public String trocarSenha(String login, TrocaSenhaDto dto) {
+        for (UsuarioEntity u : usuarios) {
+            if (u.getLogin().equals(login)) {
+
+                if (!u.getSenha().equals(dto.getSenhaAtual())) {
+                    return "Erro ao realizar a troca de senha: senha atual incorreta.";
+                }
+
+                if (dto.getSenhaNova() == null || dto.getSenhaNova().length() < 8) {
+                    return "Erro ao realizar a troca de senha: a nova senha deve ter pelo menos 8 caracteres.";
+                }
+
+                if (!dto.getSenhaNova().equals(dto.getSenhaNovaConfirmada())) {
+                    return "Erro: a nova senha e a confirmação não conferem.";
+                }
+
+                u.setSenha(dto.getSenhaNova());
+                return "Senha alterada com sucesso.";
+            }
+        }
+        return "Erro: Usuário não encontrado.";
     }
 
 }
