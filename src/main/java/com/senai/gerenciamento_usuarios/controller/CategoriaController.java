@@ -5,6 +5,8 @@ import com.senai.gerenciamento_usuarios.service.CadastroProdutosService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping
 public class CategoriaController {
@@ -22,7 +24,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/categorias")
-    public ResponseEntity<String> listar(@RequestBody CategoriaDto categoriaDto) {
+    public ResponseEntity<List<CategoriaDto>> listarCategorias() {
         return null;
     }
 }
