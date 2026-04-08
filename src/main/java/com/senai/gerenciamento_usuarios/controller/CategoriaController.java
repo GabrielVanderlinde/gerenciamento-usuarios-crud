@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class CategoriaController {
 
     //Injeção de Dependencias
@@ -20,11 +20,18 @@ public class CategoriaController {
 
     @PostMapping("/categorias")
     public ResponseEntity<String> cadastrar(@RequestBody CategoriaDto categoriaDto) {
-        return null;
+        boolean retorno = cadastroProdutosService.cadastrarCategoria(categoriaDto);
+
+        if (retorno) {
+            return ResponseEntity.ok().body("Categoria Cadastrada com Sucessso");
+        } else {
+            return ResponseEntity.badRequest().body("Já existe esta Cadastrada!");
+        }
     }
 
     @GetMapping("/categorias")
     public ResponseEntity<List<CategoriaDto>> listarCategorias() {
-        return null;
+        List<CategoriaDto> lista = cadastroProdutosService.listarCategorias();
+        return ResponseEntity.ok(lista);
     }
 }
