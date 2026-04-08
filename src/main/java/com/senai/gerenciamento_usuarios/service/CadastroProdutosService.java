@@ -68,7 +68,16 @@ public class CadastroProdutosService {
         return true;
     }
 
-    public List<ProdutoDto> listarProdutos(long id_categoria) {
+    public List<ProdutoDto> listarProdutos() {
+        List<ProdutoDto> listaDto = new ArrayList<>();
+
+        for (ProdutoEntity p : produtos) {
+            listaDto.add(new ProdutoDto(p.getId_produto(), p.getNome_produto()));
+        }
+        return listaDto;
+    }
+
+    public List<ProdutoDto> listarProdutosPorCategoria(long id_categoria) {
         List<ProdutoDto> listaDto = new ArrayList<>();
 
         for (ProdutoEntity p : produtos) {
