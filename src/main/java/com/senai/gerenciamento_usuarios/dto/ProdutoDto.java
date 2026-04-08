@@ -7,7 +7,7 @@ public class ProdutoDto {
     private long id_categoria;
 
     //Constructors
-    public ProdutoDto() {
+    public ProdutoDto(long idProduto, String nomeProduto) {
     }
 
     public ProdutoDto(long id_produto, String nome_produto, Double preco_produto, long id_categoria) {

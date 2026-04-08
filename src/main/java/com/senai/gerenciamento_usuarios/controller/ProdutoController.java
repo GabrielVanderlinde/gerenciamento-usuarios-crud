@@ -3,13 +3,15 @@ package com.senai.gerenciamento_usuarios.controller;
 import com.senai.gerenciamento_usuarios.dto.CategoriaDto;
 import com.senai.gerenciamento_usuarios.dto.ProdutoDto;
 import com.senai.gerenciamento_usuarios.service.CadastroProdutosService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class ProdutoController {
 
     //Injeção de Dependencias
@@ -21,16 +23,25 @@ public class ProdutoController {
 
     @PostMapping("/produtos")
     public ResponseEntity<String> cadastrar(@RequestBody ProdutoDto produtoDto) {
-        return null;
+
+        boolean sucesso = cadastroProdutosService.cadastrarProduto(produtoDto);
+
+        if (sucesso) {
+            return ResponseEntity.ok("Produto cadastrado com sucesso");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro: Categoria não encontrada.");
+        }
     }
 
     @GetMapping("/produtos")
     public ResponseEntity<List<ProdutoDto>> listar() {
-        return null;
+        List<ProdutoDto> lista = cadastroProdutosService.listarProdutos();
+        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/produtos/categoria/{id}")
-    public ResponseEntity<List<CategoriaDto>> listarCategoria(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<List<ProdutoDto>> listarCategoria(@PathVariable Long id) {
+        List<ProdutoDto> lista = cadastroProdutosService.listarProdutosPorCategoria(id);
+        return ResponseEntity.ok(lista);
     }
 }
