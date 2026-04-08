@@ -63,6 +63,7 @@ public class CadastroProdutosService {
         produto.setId_produto(contadorProduto++);
         produto.setNome_produto(produtoDto.getNome_produto());
         produto.setPreco_produto(produtoDto.getPreco_produto());
+        produto.setId_categoria(produtoDto.getId_categoria());
 
         produtos.add(produto);
         return true;
