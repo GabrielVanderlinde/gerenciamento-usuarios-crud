@@ -1,9 +1,20 @@
 package com.senai.gerenciamento_usuarios.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "produto")
 public class ProdutoEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id_produto;
+    @Column(name = "nome")
     private String nome_produto;
+    @Column(name = "preco")
     private Double preco_produto;
+    @Column(name = "id_categoria")
     private long id_categoria;
 
     //Constructors
