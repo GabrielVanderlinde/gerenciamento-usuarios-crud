@@ -21,8 +21,6 @@ public class CategoriaService {
 
         CategoriaEntity categoria = new CategoriaEntity();
 
-        int contadorCategoria = 0;
-        categoria.setId_categoria(contadorCategoria++);
         categoria.setNome_categoria(categoriaDto.getNome_categoria());
 
         repository.save(categoria);
