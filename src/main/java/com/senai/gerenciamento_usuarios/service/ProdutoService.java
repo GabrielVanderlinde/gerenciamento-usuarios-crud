@@ -1,7 +1,6 @@
 package com.senai.gerenciamento_usuarios.service;
 
 import com.senai.gerenciamento_usuarios.dto.ProdutoDto;
-import com.senai.gerenciamento_usuarios.entity.CategoriaEntity;
 import com.senai.gerenciamento_usuarios.entity.ProdutoEntity;
 import com.senai.gerenciamento_usuarios.repositories.CategoriaRepository;
 import com.senai.gerenciamento_usuarios.repositories.ProdutoRepository;
@@ -49,6 +48,15 @@ public class ProdutoService {
             listaDto.add(new ProdutoDto(p.getId_produto(), p.getNome_produto()));
         }
         return listaDto;
+    }
+
+    public String removerProduto(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return "Produto removido com Sucesso!";
+        } else {
+            return "Erro! Produto não existente!";
+        }
     }
 }
 

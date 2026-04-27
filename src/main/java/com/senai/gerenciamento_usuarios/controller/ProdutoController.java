@@ -1,8 +1,6 @@
 package com.senai.gerenciamento_usuarios.controller;
 
-import com.senai.gerenciamento_usuarios.dto.CategoriaDto;
 import com.senai.gerenciamento_usuarios.dto.ProdutoDto;
-import com.senai.gerenciamento_usuarios.service.CadastroProdutosService;
 import com.senai.gerenciamento_usuarios.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,11 +38,15 @@ public class ProdutoController {
         return ResponseEntity.ok(lista);
     }
 
-    /*
-    @GetMapping("/produtos/categoria/{id}")
-    public ResponseEntity<List<ProdutoDto>> listarCategoria(@PathVariable Long id) {
-        List<ProdutoDto> lista = produtoService.listarProdutosPorCategoria(id);
-        return ResponseEntity.ok(lista);
+    @DeleteMapping("/produtos/{id}")
+    public ResponseEntity<String> remover(@PathVariable Long id) {
+        String resposta = produtoService.removerProduto(id);
+
+        if (resposta.startsWith("Erro")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resposta);
+        }
+
+        return ResponseEntity.ok().body(resposta);
     }
-     */
+
 }
