@@ -1,5 +1,8 @@
 package com.senai.gerenciamento_usuarios.entity;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class UsuarioEntity {
 
     private String cpf;
@@ -7,10 +10,12 @@ public class UsuarioEntity {
     private String login;
     private String senha;
 
+
     public UsuarioEntity() {
     }
 
     // Get and Set
+
     public String getCpf() {
         return cpf;
     }
