@@ -38,4 +38,13 @@ public class CategoriaService {
         return listaDto;
     }
 
+    public String removerCategoria(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return "Categoria Removida com Sucesso!";
+        } else {
+            return "Erro! Categoria não existente!";
+        }
+    }
+
 }

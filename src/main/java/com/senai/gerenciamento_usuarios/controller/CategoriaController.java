@@ -1,8 +1,8 @@
 package com.senai.gerenciamento_usuarios.controller;
 
 import com.senai.gerenciamento_usuarios.dto.CategoriaDto;
-import com.senai.gerenciamento_usuarios.service.CadastroProdutosService;
 import com.senai.gerenciamento_usuarios.service.CategoriaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +34,16 @@ public class CategoriaController {
     public ResponseEntity<List<CategoriaDto>> listarCategorias() {
         List<CategoriaDto> lista = categoriaService.listarCategorias();
         return ResponseEntity.ok(lista);
+    }
+
+    @DeleteMapping("/categorias/{id}")
+    public ResponseEntity<String> remover(@PathVariable Long id) {
+        String resposta = categoriaService.removerCategoria(id);
+
+        if (resposta.startsWith("Erro")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resposta);
+        }
+
+        return ResponseEntity.ok().body(resposta);
     }
 }
